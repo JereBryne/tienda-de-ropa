@@ -3,14 +3,33 @@ import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Navbar from "./components/Navbar";
 import Carrito from "./pages/Carrito";
+import Acceso from "./pages/Acceso";
 import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 function App() {
+  const [usuario, setUsuario] = useState(null);
   const [carrito, setCarrito] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  function cerrarSesion() {
+    setUsuario(null);
+    setCarrito([]);
+  }
+
+
+  function iniciarSesion(usuarioData) {
+    setUsuario(usuarioData);
+  }
+
   function agregarAlCarrito(producto) {
+    if (!usuario) {
+      navigate("/acceso?modo=login", { state: { from: location.pathname } });
+      return;
+    }
     setCarrito((carritoActual) => {
       const cantidadActual = carritoActual.filter(
         (item) => item.id === producto.id,
@@ -25,7 +44,7 @@ function App() {
   }
   return (
     <>
-      <Navbar cantidadProductos={carrito.length} />
+      <Navbar cantidadProductos={carrito.length} usuario={usuario} onCerrarSesion={cerrarSesion} />
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route
@@ -37,6 +56,10 @@ function App() {
           element={
             <DetalleProducto carrito={carrito} onAgregar={agregarAlCarrito} />
           }
+        />
+        <Route
+          path="/acceso"
+          element={<Acceso onIniciarSesion={iniciarSesion} />}
         />
         <Route path="/carrito" element={<Carrito carrito={carrito} />} />
       </Routes>
