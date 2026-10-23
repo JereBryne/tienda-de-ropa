@@ -1,6 +1,12 @@
 import CarritoItem from "../components/CarritoItem";
+import { useState } from "react";
+import { descuentos } from "../data/descuentos";
 
 function Carrito({ carrito, onAgregar, onDisminuir, onEliminar }) {
+  const [codigo, setCodigo] = useState("");
+  const [descuento, setDescuento] = useState(null);
+  const [errorDes, setErrorDes] = useState(null);
+
   const productosAgrupados = carrito.reduce((agrupados, producto) => {
     const existente = agrupados.find((item) => item.id === producto.id);
     if (existente) {
@@ -16,6 +22,21 @@ function Carrito({ carrito, onAgregar, onDisminuir, onEliminar }) {
     (acumulado, producto) => acumulado + producto.precio * producto.cantidad,
     0,
   );
+  const totalDescuento = descuento ? total * (descuento / 100) : 0;
+  const totalConDescuento = total - totalDescuento;
+
+  function aplicarDescuento() {
+  const codigoNormalizado = codigo.trim().toUpperCase();
+  const porcentaje = descuentos[codigoNormalizado];
+  if (porcentaje) {
+    setDescuento(porcentaje);
+    setErrorDes(null);
+  } else {
+    setDescuento(null);
+    setErrorDes("Código de descuento inválido");
+  }
+}
+
   return (
     <main>
       <h1>Carrito</h1>
@@ -34,9 +55,22 @@ function Carrito({ carrito, onAgregar, onDisminuir, onEliminar }) {
               />
             ))}
           </ul>
+          <input
+            id="descuento"
+            name="descuento"
+            type="text"
+            placeholder="Ingrese un código de descuento"
+            value={codigo}
+            onChange={(e) => setCodigo(e.target.value)}
+          />
+          {errorDes && <p>{errorDes}</p>}
 
+          <button type="button" onClick={aplicarDescuento}>Aplicar descuento</button>
+          
           <p>Unidades totales: {carrito.length}</p>
-          <p>Total de la compra: ${total}</p>
+          <p>Subtotal de la compra: ${total}</p>
+          {descuento && <p>Descuento aplicado: {descuento}%: -${totalDescuento}</p>}
+          <p>Total a pagar: ${totalConDescuento}</p>
         </>
       )}
     </main>

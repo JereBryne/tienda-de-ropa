@@ -7,10 +7,18 @@ import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
 import Contacto from "./pages/Contacto";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(()=> {
+    const carritoGuardado = localStorage.getItem("carrito");
+    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
+
   function agregarAlCarrito(producto) {
     setCarrito((carritoActual) => {
       const cantidadActual = carritoActual.filter(
