@@ -43,28 +43,30 @@ function App() {
     });
   }
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar cantidadProductos={carrito.length} usuario={usuario} onCerrarSesion={cerrarSesion} />
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route
-          path="/productos"
-          element={<Productos carrito={carrito} onAgregar={agregarAlCarrito} />}
-        />
-        <Route
-          path="/producto/:id"
-          element={
-            <DetalleProducto carrito={carrito} onAgregar={agregarAlCarrito} />
-          }
-        />
-        <Route
-          path="/acceso"
-          element={<Acceso onIniciarSesion={iniciarSesion} />}
-        />
-        <Route path="/carrito" element={<Carrito carrito={carrito} />} />
-      </Routes>
+      <main className="flex-grow-1">
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route
+            path="/productos"
+            element={<Productos carrito={carrito} onAgregar={agregarAlCarrito} />}
+          />
+          <Route
+            path="/producto/:id"
+            element={
+              <DetalleProducto carrito={carrito} onAgregar={agregarAlCarrito} />
+            }
+          />
+          <Route
+            path="/acceso"
+            element={<Acceso onIniciarSesion={iniciarSesion} />}
+          />
+          <Route path="/carrito" element={<Carrito carrito={carrito} />} />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
