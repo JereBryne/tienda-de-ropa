@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-function ProductoCard({ producto, carrito, onAgregar }) {
+function ProductoCard({ producto, carrito, onAgregar, esFavoritos, onFavoritos }) {
   const cantidadEnCarrito = carrito.filter(
     (item) => item.id === producto.id,
   ).length;
@@ -22,6 +22,13 @@ function ProductoCard({ producto, carrito, onAgregar }) {
         onClick={() => onAgregar(producto)}
       >
         Agregar al carrito
+      </button>
+      <button
+        type="button"
+        onClick={() => onFavoritos(producto.id)}
+        aria-pressed={esFavoritos}
+      >
+        {esFavoritos ? "Quitar de favoritos" : "Agregar a favoritos"}
       </button>
     </article>
   );

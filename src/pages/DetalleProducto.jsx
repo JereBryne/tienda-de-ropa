@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { productos } from "../data/productos";
 
-function DetalleProducto({ carrito, onAgregar }) {
+function DetalleProducto({ carrito, onAgregar, favoritos, onFavoritos }) {
   const { id } = useParams();
   const producto = productos.find((producto) => producto.id === Number(id));
   if (!producto) {
@@ -12,6 +12,7 @@ function DetalleProducto({ carrito, onAgregar }) {
       </main>
     );
   }
+  const esFavorito = favoritos.includes(producto.id);
   const cantidadEnCarrito = carrito.filter(
     (item) => item.id === producto.id,
   ).length;
@@ -32,6 +33,13 @@ function DetalleProducto({ carrito, onAgregar }) {
         onClick={() => onAgregar(producto)}
       >
         Agregar al carrito
+      </button>
+       <button
+        type="button"
+        onClick={() => onFavoritos(producto.id)}
+        aria-pressed={esFavorito}
+      >
+        {esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
       </button>
       <Link to="/productos">Volver al catálogo</Link>
     </main>

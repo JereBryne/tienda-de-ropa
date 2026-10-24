@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Navbar({ cantidadProductos }) {
+function Navbar({ cantidadProductos, tema, onCambiarTema }) {
   return (
     <header>
       <Link to="/">Tienda de Ropa</Link>
@@ -12,6 +12,10 @@ function Navbar({ cantidadProductos }) {
         <Link to="/carrito">Carrito</Link>
         {" | "}
         <Link to="/contacto">Finalizar compra</Link>
+        {" | "}
+        <button onClick={onCambiarTema}>
+          Cambiar a {tema === "light" ? "modo oscuro" : "modo claro"}
+        </button>
       </nav>
 
       <p>Productos en el carrito: {cantidadProductos}</p>

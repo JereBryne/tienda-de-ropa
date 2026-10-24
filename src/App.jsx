@@ -1,4 +1,3 @@
-import "./App.css";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Navbar from "./components/Navbar";
@@ -10,14 +9,51 @@ import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [carrito, setCarrito] = useState(()=> {
+  const [carrito, setCarrito] = useState(() => {
     const carritoGuardado = localStorage.getItem("carrito");
     return carritoGuardado ? JSON.parse(carritoGuardado) : [];
   });
-  
+
+  const [favoritos, setFavoritos] = useState(() => {
+    const favoritosGuardados = localStorage.getItem("favoritos");
+    return favoritosGuardados ? JSON.parse(favoritosGuardados) : [];
+  });
+
+  const [tema, setTema] = useState(() => {
+    const temaGuardado = localStorage.getItem("tema");
+    if (temaGuardado) {
+      return temaGuardado;
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
+
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", tema);
+    localStorage.setItem("tema", tema);
+  }, [tema]);
+
+  function cambiarTema() {
+    setTema((temaActual) => (temaActual === "light" ? "dark" : "light"));
+  }
+
+  function agregarAFavoritos(id) {
+    setFavoritos((favoritosActuales) => {
+      if (favoritosActuales.includes(id)) {
+        return favoritosActuales.filter((favoritoId) => favoritoId !== id);
+      }
+      return [...favoritosActuales, id];
+    });
+  }
 
   function agregarAlCarrito(producto) {
     setCarrito((carritoActual) => {
@@ -55,17 +91,33 @@ function App() {
   }
   return (
     <>
-      <Navbar cantidadProductos={carrito.length} />
+      <Navbar
+        cantidadProductos={carrito.length}
+        tema={tema}
+        onCambiarTema={cambiarTema}
+      />
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route
           path="/productos"
-          element={<Productos carrito={carrito} onAgregar={agregarAlCarrito} />}
+          element={
+            <Productos
+              carrito={carrito}
+              onAgregar={agregarAlCarrito}
+              favoritos={favoritos}
+              onFavoritos={agregarAFavoritos}
+            />
+          }
         />
         <Route
           path="/producto/:id"
           element={
-            <DetalleProducto carrito={carrito} onAgregar={agregarAlCarrito} />
+            <DetalleProducto
+              carrito={carrito}
+              onAgregar={agregarAlCarrito}
+              favoritos={favoritos}
+              onFavoritos={agregarAFavoritos}
+            />
           }
         />
         <Route
