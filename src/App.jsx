@@ -6,6 +6,7 @@ import Carrito from "./pages/Carrito";
 import Acceso from "./pages/Acceso";
 import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
+import Contacto from "./pages/Contacto";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
@@ -42,9 +43,34 @@ function App() {
       return [...carritoActual, producto];
     });
   }
+  function quitarUnaUnidad(id) {
+    setCarrito((carritoActual) => {
+      const indiceAEliminar = carritoActual.findIndex(
+        (producto) => producto.id === id,
+      );
+
+      if (indiceAEliminar === -1) return carritoActual;
+
+      return carritoActual.filter(
+        (_producto, indice) => indice !== indiceAEliminar,
+      );
+    });
+  }
+  function eliminarDelCarrito(id) {
+    setCarrito((carritoActual) =>
+      carritoActual.filter((producto) => producto.id !== id),
+    );
+  }
+  function vaciarCarrito() {
+    setCarrito([]);
+  }
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Navbar cantidadProductos={carrito.length} usuario={usuario} onCerrarSesion={cerrarSesion} />
+      <Navbar
+        cantidadProductos={carrito.length}
+        usuario={usuario}
+        onCerrarSesion={cerrarSesion}
+      />
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -62,7 +88,21 @@ function App() {
             path="/acceso"
             element={<Acceso onIniciarSesion={iniciarSesion} />}
           />
-          <Route path="/carrito" element={<Carrito carrito={carrito} />} />
+          <Route
+            path="/carrito"
+            element={
+              <Carrito
+                carrito={carrito}
+                onAgregar={agregarAlCarrito}
+                onDisminuir={quitarUnaUnidad}
+                onEliminar={eliminarDelCarrito}
+              />
+            }
+          />
+          <Route
+            path="/contacto"
+            element={<Contacto carrito={carrito} onConfirmar={vaciarCarrito} />}
+          />
         </Routes>
       </main>
       <Footer />

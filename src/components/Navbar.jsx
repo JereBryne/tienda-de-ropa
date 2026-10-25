@@ -10,6 +10,8 @@ function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
         <Link to="/productos">Productos</Link>
         {" | "}
         <Link to="/carrito">Carrito</Link>
+        {" | "}
+        <Link to="/contacto">Finalizar compra</Link>
       </nav>
       {usuario ? (
         <div>
