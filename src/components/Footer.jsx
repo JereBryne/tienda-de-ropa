@@ -1,5 +1,8 @@
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+const claseLink =
+  "link-light link-opacity-50 link-opacity-75-hover text-decoration-none";
 
 function Footer() {
   return (
@@ -14,9 +17,15 @@ function Footer() {
           </Col>
 
           <Col md={4} className="text-center">
-            <Link to="/" className="text-light text-decoration-none me-3">Inicio</Link>
-            <Link to="/productos" className="text-light text-decoration-none me-3">Productos</Link>
-            <Link to="/carrito" className="text-light text-decoration-none">Carrito</Link>
+            <Link to="/" className={`${claseLink} me-3`}>
+              Inicio
+            </Link>
+            <Link to="/productos" className={`${claseLink} me-3`}>
+              Productos
+            </Link>
+            <Link to="/carrito" className={claseLink}>
+              Carrito
+            </Link>
           </Col>
 
           <Col md={4} className="text-md-end">
@@ -27,7 +36,7 @@ function Footer() {
         </Row>
       </Container>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
