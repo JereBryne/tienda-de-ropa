@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Carrito from "./pages/Carrito";
 import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
+import Contacto from "./pages/Contacto";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
@@ -23,6 +24,27 @@ function App() {
       return [...carritoActual, producto];
     });
   }
+  function quitarUnaUnidad(id) {
+    setCarrito((carritoActual) => {
+      const indiceAEliminar = carritoActual.findIndex(
+        (producto) => producto.id === id,
+      );
+
+      if (indiceAEliminar === -1) return carritoActual;
+
+      return carritoActual.filter(
+        (_producto, indice) => indice !== indiceAEliminar,
+      );
+    });
+  }
+  function eliminarDelCarrito(id) {
+    setCarrito((carritoActual) =>
+      carritoActual.filter((producto) => producto.id !== id),
+    );
+  }
+  function vaciarCarrito() {
+    setCarrito([]);
+  }
   return (
     <>
       <Navbar cantidadProductos={carrito.length} />
@@ -38,7 +60,21 @@ function App() {
             <DetalleProducto carrito={carrito} onAgregar={agregarAlCarrito} />
           }
         />
-        <Route path="/carrito" element={<Carrito carrito={carrito} />} />
+        <Route
+          path="/carrito"
+          element={
+            <Carrito
+              carrito={carrito}
+              onAgregar={agregarAlCarrito}
+              onDisminuir={quitarUnaUnidad}
+              onEliminar={eliminarDelCarrito}
+            />
+          }
+        />
+        <Route
+          path="/contacto"
+          element={<Contacto carrito={carrito} onConfirmar={vaciarCarrito} />}
+        />
       </Routes>
       <Footer />
     </>

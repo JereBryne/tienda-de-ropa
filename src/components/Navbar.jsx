@@ -10,6 +10,8 @@ function Navbar({ cantidadProductos }) {
         <Link to="/productos">Productos</Link>
         {" | "}
         <Link to="/carrito">Carrito</Link>
+        {" | "}
+        <Link to="/contacto">Finalizar compra</Link>
       </nav>
 
       <p>Productos en el carrito: {cantidadProductos}</p>
