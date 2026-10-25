@@ -1,6 +1,14 @@
 import CarritoItem from "../components/CarritoItem";
 import { useState } from "react";
 import { descuentos } from "../data/descuentos";
+import {
+  Button,
+  Table,
+  InputGroup,
+  Form,
+  Alert,
+  Container,
+} from "react-bootstrap";
 
 function Carrito({ carrito, onAgregar, onDisminuir, onEliminar }) {
   const [codigo, setCodigo] = useState("");
@@ -26,53 +34,76 @@ function Carrito({ carrito, onAgregar, onDisminuir, onEliminar }) {
   const totalConDescuento = total - totalDescuento;
 
   function aplicarDescuento() {
-  const codigoNormalizado = codigo.trim().toUpperCase();
-  const porcentaje = descuentos[codigoNormalizado];
-  if (porcentaje) {
-    setDescuento(porcentaje);
-    setErrorDes(null);
-  } else {
-    setDescuento(null);
-    setErrorDes("Código de descuento inválido");
+    const codigoNormalizado = codigo.trim().toUpperCase();
+    const porcentaje = descuentos[codigoNormalizado];
+    if (porcentaje) {
+      setDescuento(porcentaje);
+      setErrorDes(null);
+    } else {
+      setDescuento(null);
+      setErrorDes("Código de descuento inválido");
+    }
   }
-}
 
   return (
     <main>
-      <h1>Carrito</h1>
-      {carrito.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
-      ) : (
-        <>
-          <ul>
-            {productosAgrupados.map((producto) => (
-              <CarritoItem
-                key={producto.id}
-                producto={producto}
-                onAgregar={onAgregar}
-                onDisminuir={onDisminuir}
-                onEliminar={onEliminar}
+      <Container className="my-4">
+        <h1>Carrito</h1>
+        <Alert variant="dark">Unidades totales: {carrito.length}</Alert>
+        {carrito.length === 0 ? (
+          <p>Tu carrito está vacío.</p>
+        ) : (
+          <>
+            <Table responsive className="align-middle">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio por unidad</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {productosAgrupados.map((producto) => (
+                  <CarritoItem
+                    key={producto.id}
+                    producto={producto}
+                    onAgregar={onAgregar}
+                    onDisminuir={onDisminuir}
+                    onEliminar={onEliminar}
+                  />
+                ))}
+              </tbody>
+            </Table>
+            <InputGroup className="mb-3">
+              <Form.Control
+                id="descuento"
+                name="descuento"
+                type="text"
+                placeholder="Ingrese un código de descuento"
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
               />
-            ))}
-          </ul>
-          <input
-            id="descuento"
-            name="descuento"
-            type="text"
-            placeholder="Ingrese un código de descuento"
-            value={codigo}
-            onChange={(e) => setCodigo(e.target.value)}
-          />
-          {errorDes && <p>{errorDes}</p>}
-
-          <button type="button" onClick={aplicarDescuento}>Aplicar descuento</button>
-          
-          <p>Unidades totales: {carrito.length}</p>
-          <p>Subtotal de la compra: ${total}</p>
-          {descuento && <p>Descuento aplicado: {descuento}%: -${totalDescuento}</p>}
-          <p>Total a pagar: ${totalConDescuento}</p>
-        </>
-      )}
+              <Button variant="outline-success" onClick={aplicarDescuento}>
+                Aplicar descuento
+              </Button>
+            </InputGroup>
+            {errorDes && (
+              <Alert variant="danger" className="mt-2">
+                {errorDes}
+              </Alert>
+            )}{" "}
+            <Alert variant="dark">Subtotal de la compra: ${total}</Alert>
+            {descuento && (
+              <Alert variant="success">
+                Descuento aplicado: {descuento}%: -${totalDescuento}
+              </Alert>
+            )}
+            <Alert variant="success">Total a pagar: ${totalConDescuento}</Alert>
+          </>
+        )}
+      </Container>
     </main>
   );
 }

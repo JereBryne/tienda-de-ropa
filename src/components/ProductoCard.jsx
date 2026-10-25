@@ -28,7 +28,7 @@ function ProductoCard({ producto, carrito, onAgregar, esFavoritos, onFavoritos }
         onClick={() => onFavoritos(producto.id)}
         aria-pressed={esFavoritos}
       >
-        {esFavoritos ? "Quitar de favoritos" : "Agregar a favoritos"}
+        {esFavoritos ? "❤︎︎" : "♡︎"}
       </button>
     </article>
   );
