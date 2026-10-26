@@ -158,7 +158,7 @@ function Acceso({ onIniciarSesion }) {
                   <Link
                     onClick={() => setErrors({})}
                     to="/acceso?modo=login"
-                    state={{from: location.pathname}}
+                    state={{ from }}
                   >
                     Inicia sesión
                   </Link>
@@ -169,7 +169,7 @@ function Acceso({ onIniciarSesion }) {
                   <Link
                     onClick={() => setErrors({})}
                     to="/acceso?modo=registro"
-                    state={{from: location.pathname}}
+                    state={{ from }}
                   >
                     Regístrate
                   </Link>
