@@ -90,7 +90,7 @@ function App() {
     setCarrito([]);
   }
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar
         cantidadProductos={carrito.length}
         tema={tema}
@@ -137,7 +137,7 @@ function App() {
         />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
