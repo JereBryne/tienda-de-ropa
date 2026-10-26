@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 
 function FormularioCompra({ onConfirmar }) {
   const [datos, setDatos] = useState({
@@ -9,7 +10,9 @@ function FormularioCompra({ onConfirmar }) {
     entrega: "",
     mensaje: "",
   });
+
   const [error, setError] = useState("");
+
   function cambiarCampo(evento) {
     const { name, value } = evento.target;
 
@@ -18,6 +21,7 @@ function FormularioCompra({ onConfirmar }) {
       [name]: value,
     }));
   }
+
   function enviarFormulario(evento) {
     evento.preventDefault();
 
@@ -42,65 +46,100 @@ function FormularioCompra({ onConfirmar }) {
   }
 
   return (
-    <form onSubmit={enviarFormulario} noValidate>
-      <label htmlFor="nombre">Nombre y apellido</label>
-      <input
-        id="nombre"
-        name="nombre"
-        type="text"
-        value={datos.nombre}
-        onChange={cambiarCampo}
-      />
+    <Form onSubmit={enviarFormulario} noValidate>
 
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        value={datos.email}
-        onChange={cambiarCampo}
-      />
+      <Form.Group className="mb-3" controlId="nombre">
+        <Form.Label>Nombre y apellido</Form.Label>
 
-      <label htmlFor="telefono">Teléfono</label>
-      <input
-        id="telefono"
-        name="telefono"
-        type="tel"
-        value={datos.telefono}
-        onChange={cambiarCampo}
-      />
+        <Form.Control
+          name="nombre"
+          type="text"
+          placeholder="Ingresá tu nombre y apellido"
+          value={datos.nombre}
+          onChange={cambiarCampo}
+        />
+      </Form.Group>
 
-      <label htmlFor="direccion">Dirección o localidad</label>
-      <input
-        id="direccion"
-        name="direccion"
-        type="text"
-        value={datos.direccion}
-        onChange={cambiarCampo}
-      />
+      <Form.Group className="mb-3" controlId="email">
+        <Form.Label>Email</Form.Label>
 
-      <label htmlFor="entrega">Método de entrega</label>
-      <select
-        id="entrega"
-        name="entrega"
-        value={datos.entrega}
-        onChange={cambiarCampo}
+        <Form.Control
+          name="email"
+          type="email"
+          placeholder="Ingresá tu email"
+          value={datos.email}
+          onChange={cambiarCampo}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="telefono">
+        <Form.Label>Teléfono</Form.Label>
+
+        <Form.Control
+          name="telefono"
+          type="tel"
+          placeholder="Ingresá tu teléfono"
+          value={datos.telefono}
+          onChange={cambiarCampo}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="direccion">
+        <Form.Label>Dirección o localidad</Form.Label>
+
+        <Form.Control
+          name="direccion"
+          type="text"
+          placeholder="Ingresá tu dirección o localidad"
+          value={datos.direccion}
+          onChange={cambiarCampo}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="entrega">
+        <Form.Label>Método de entrega</Form.Label>
+
+        <Form.Select
+          name="entrega"
+          value={datos.entrega}
+          onChange={cambiarCampo}
+        >
+          <option value="">Seleccionar</option>
+          <option value="retiro">Retiro por el local</option>
+          <option value="envio">Envío a domicilio</option>
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="mensaje">
+        <Form.Label>Aclaración opcional</Form.Label>
+
+        <Form.Control
+          as="textarea"
+          rows={3}
+          name="mensaje"
+          placeholder="Podés agregar una aclaración"
+          value={datos.mensaje}
+          onChange={cambiarCampo}
+        />
+      </Form.Group>
+
+      {error && (
+        <Alert variant="danger">
+          {error}
+        </Alert>
+      )}
+
+      <Button
+        type="submit"
+        variant="dark"
+        size="lg"
+        className="w-100"
       >
-        <option value="">Seleccionar</option>
-        <option value="retiro">Retiro por el local</option>
-        <option value="envio">Envío a domicilio</option>
-      </select>
+        Confirmar compra
+      </Button>
 
-      <label htmlFor="mensaje">Aclaración opcional</label>
-      <textarea
-        id="mensaje"
-        name="mensaje"
-        value={datos.mensaje}
-        onChange={cambiarCampo}
-      />
-      {error && <p>{error}</p>}
-      <button type="submit">Confirmar compra</button>
-    </form>
+    </Form>
   );
 }
+
 export default FormularioCompra;
