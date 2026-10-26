@@ -45,7 +45,7 @@ function DetalleProducto({ carrito, onAgregar }) {
           <p className="fs-3 fw-bold">
             ${producto.precio.toLocaleString("es-AR")}
           </p>
-          <p className="text-muted">{producto.descripcion}</p>
+          <p className="text-muted">{producto.descripcionCompleta}</p>
 
           {stockDisponible > 0 ? (
             <p className="text-success">Stock disponible: {stockDisponible}</p>
