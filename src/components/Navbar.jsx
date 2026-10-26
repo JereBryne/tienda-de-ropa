@@ -1,21 +1,78 @@
-import { Link } from "react-router-dom";
+import {
+  Navbar as BsNavbar,
+  Nav,
+  Container,
+  Badge,
+  Button,
+} from "react-bootstrap";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
-function Navbar({ cantidadProductos }) {
+function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
+  const location = useLocation();
+
   return (
-    <header>
-      <Link to="/">Tienda de Ropa</Link>
-      <nav>
-        <Link to="/">Inicio</Link>
-        {" | "}
-        <Link to="/productos">Productos</Link>
-        {" | "}
-        <Link to="/carrito">Carrito</Link>
-        {" | "}
-        <Link to="/contacto">Finalizar compra</Link>
-      </nav>
+    <BsNavbar expand="md" bg="dark" data-bs-theme="dark" sticky="top">
+      <Container>
+        <BsNavbar.Brand as={Link} to="/">
+          Tienda de Ropa
+        </BsNavbar.Brand>
+        <BsNavbar.Toggle aria-controls="menu-principal" />
 
-      <p>Productos en el carrito: {cantidadProductos}</p>
-    </header>
+        <BsNavbar.Collapse id="menu-principal">
+          <Nav className="me-auto">
+            <Nav.Link as={NavLink} to="/" end>
+              Inicio
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/productos">
+              Productos
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/carrito">
+              Carrito{" "}
+              <Badge bg="primary" pill>
+                {cantidadProductos}
+              </Badge>
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/contacto">
+              Finalizar compra
+            </Nav.Link>
+          </Nav>
+
+          <Nav className="align-items-md-center">
+            {usuario ? (
+              <>
+                <span className="navbar-text me-md-3">
+                  Bienvenido, {usuario.name}
+                </span>
+                <Button
+                  variant="outline-light"
+                  size="sm"
+                  onClick={onCerrarSesion}
+                >
+                  Cerrar sesión
+                </Button>
+              </>
+            ) : (
+              <>
+                <Nav.Link
+                  as={Link}
+                  to="/acceso?modo=login"
+                  state={{ from: location.pathname }}
+                >
+                  Iniciar sesión
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/acceso?modo=registro"
+                  state={{ from: location.pathname }}
+                >
+                  Registrarse
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
+        </BsNavbar.Collapse>
+      </Container>
+    </BsNavbar>
   );
 }
 
