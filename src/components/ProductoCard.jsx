@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function ProductoCard({ producto, onAgregar, cantidadEnCarrito = 0 }) {
   const sinStock = producto.stock === 0;
   const maximoAlcanzado = cantidadEnCarrito >= producto.stock;
-
+  const stockDisponible = producto.stock - cantidadEnCarrito;
   return (
     <Card className="h-100 shadow-sm">
       <Card.Img
@@ -27,7 +27,7 @@ function ProductoCard({ producto, onAgregar, cantidadEnCarrito = 0 }) {
           {sinStock ? (
             <Badge bg="danger">Sin stock</Badge>
           ) : (
-            <small className="text-success">Stock: {producto.stock}</small>
+            <small className="text-success">Stock: {stockDisponible}</small>
           )}
 
           <div className="d-flex gap-2 mt-3">

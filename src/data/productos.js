@@ -5,6 +5,7 @@ export const productos = [
     categoria: "Remeras",
     precio: 12000,
     stock: 10,
+    imagen: "/img/productos/01-remera-basica.png",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const productos = [
     categoria: "Buzos",
     precio: 25000,
     stock: 5,
+    imagen: "/img/productos/02-buzo-con-capucha.png",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const productos = [
     categoria: "Pantalones",
     precio: 60000,
     stock: 8,
+    imagen: "/img/productos/03-jean.png",
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const productos = [
     categoria: "Remeras",
     precio: 16000,
     stock: 7,
+    imagen: "/img/productos/04-remera-estampada.png",
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ export const productos = [
     categoria: "Remeras",
     precio: 18000,
     stock: 6,
+    imagen: "/img/productos/05-remera-oversize.png",
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ export const productos = [
     categoria: "Remeras",
     precio: 20000,
     stock: 0,
+    imagen: "/img/productos/06-remera-manga-larga.png",
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ export const productos = [
     categoria: "Buzos",
     precio: 28000,
     stock: 9,
+    imagen: "/img/productos/07-buzo-cuello-redondo.png",
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ export const productos = [
     categoria: "Buzos",
     precio: 35000,
     stock: 4,
+    imagen: "/img/productos/08-buzo-con-cierre.png",
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ export const productos = [
     categoria: "Buzos",
     precio: 32000,
     stock: 0,
+    imagen: "/img/productos/09-buzo-oversize.png",
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ export const productos = [
     categoria: "Pantalones",
     precio: 48000,
     stock: 6,
+    imagen: "/img/productos/10-pantalon-cargo.png",
   },
   {
     id: 11,
@@ -75,6 +85,7 @@ export const productos = [
     categoria: "Pantalones",
     precio: 38000,
     stock: 12,
+    imagen: "/img/productos/11-pantalon-jogger.png",
   },
   {
     id: 12,
@@ -82,5 +93,6 @@ export const productos = [
     categoria: "Pantalones",
     precio: 55000,
     stock: 3,
+    imagen: "/img/productos/12-pantalon-de-vestir.png",
   },
 ];
