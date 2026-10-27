@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Button, Badge, Alert } from "react-bootstrap";
 import { productos } from "../data/productos";
+import { formatearPrecio } from "../utils/formato";
 
 function DetalleProducto({ carrito, onAgregar }) {
   const { id } = useParams();
@@ -15,11 +16,10 @@ function DetalleProducto({ carrito, onAgregar }) {
       </Container>
     );
   }
-  const cantidadEnCarrito = carrito.filter(
-    (item) => item.id === producto.id,
-  ).length;
+  const cantidadEnCarrito =
+    carrito.find((item) => item.id === producto.id)?.cantidad ?? 0;
   const stockDisponible = producto.stock - cantidadEnCarrito;
-  const caracteristicas = producto.caracteristicas ?? [];
+  const sinStock = producto.stock === 0;
 
   return (
     <Container className="py-4">
@@ -42,39 +42,42 @@ function DetalleProducto({ carrito, onAgregar }) {
             {producto.categoria}
           </Badge>
           <h1>{producto.nombre}</h1>
-          <p className="fs-3 fw-bold">
-            ${producto.precio.toLocaleString("es-AR")}
-          </p>
-          <p className="text-muted">{producto.descripcion}</p>
+          <p className="fs-3 fw-bold">{formatearPrecio(producto.precio)}</p>
+          <p className="text-muted">{producto.descripcionCompleta}</p>
 
-          {stockDisponible > 0 ? (
-            <p className="text-success">Stock disponible: {stockDisponible}</p>
-          ) : (
+          {sinStock ? (
             <Badge bg="danger" className="mb-3">
               Sin stock
             </Badge>
+          ) : (
+            <p className="text-success">Stock disponible: {stockDisponible}</p>
           )}
 
-          {caracteristicas.length > 0 && (
-            <>
-              <h2 className="fs-5">Características</h2>
-              <ul>
-                {caracteristicas.map((caracteristica) => (
-                  <li key={caracteristica}>{caracteristica}</li>
-                ))}
-              </ul>
-            </>
-          )}
+          <h2 className="fs-5">Características</h2>
+          <ul>
+            {producto.caracteristicas.map((caracteristica) => (
+              <li key={caracteristica}>{caracteristica}</li>
+            ))}
+          </ul>
 
-          <div>
+          <div className="d-flex flex-wrap align-items-center gap-3">
             <Button
               variant="dark"
               size="lg"
               disabled={stockDisponible <= 0}
               onClick={() => onAgregar(producto)}
             >
-              Agregar al carrito
+              {sinStock
+                ? "Sin stock"
+                : stockDisponible <= 0
+                  ? "Máximo en carrito"
+                  : "Agregar al carrito"}
             </Button>
+            {cantidadEnCarrito > 0 && (
+              <Link to="/carrito" className="text-dark">
+                Tenés {cantidadEnCarrito} en el carrito
+              </Link>
+            )}
           </div>
         </Col>
       </Row>

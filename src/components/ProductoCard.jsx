@@ -1,5 +1,6 @@
 import { Card, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { formatearPrecio } from "../utils/formato";
 
 function ProductoCard({ producto, onAgregar, cantidadEnCarrito = 0 }) {
   const sinStock = producto.stock === 0;
@@ -7,23 +8,23 @@ function ProductoCard({ producto, onAgregar, cantidadEnCarrito = 0 }) {
   const stockDisponible = producto.stock - cantidadEnCarrito;
   return (
     <Card className="h-100 shadow-sm">
-      <Card.Img
-        variant="top"
-        src={producto.imagen}
-        alt={producto.nombre}
-        style={{ height: 220, objectFit: "cover" }}
-      />
+      <Link to={`/producto/${producto.id}`}>
+        <Card.Img
+          variant="top"
+          src={producto.imagen}
+          alt={producto.nombre}
+          style={{ height: 220, objectFit: "cover", opacity: sinStock ? 0.5 : 1 }}
+        />
+      </Link>
       <Card.Body className="d-flex flex-column">
         <Badge bg="secondary" className="align-self-start mb-2">
           {producto.categoria}
         </Badge>
         <Card.Title>{producto.nombre}</Card.Title>
-        <Card.Text className="text-muted">{producto.descripcion}</Card.Text>
+        <Card.Text className="text-muted small">{producto.descripcion}</Card.Text>
 
         <div className="mt-auto">
-          <p className="fs-5 fw-bold mb-1">
-            ${producto.precio.toLocaleString("es-AR")}
-          </p>
+          <p className="fs-5 fw-bold mb-1">{formatearPrecio(producto.precio)}</p>
           {sinStock ? (
             <Badge bg="danger">Sin stock</Badge>
           ) : (

@@ -23,8 +23,11 @@ function Footer() {
             <Link to="/productos" className={`${claseLink} me-3`}>
               Productos
             </Link>
-            <Link to="/carrito" className={claseLink}>
+            <Link to="/carrito" className={`${claseLink} me-3`}>
               Carrito
+            </Link>
+            <Link to="/contacto" className={claseLink}>
+              Finalizar compra
             </Link>
           </Col>
 

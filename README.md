@@ -4,9 +4,18 @@ Trabajo Práctico 1 de Construcción de Interfaces de Usuario de la Universidad 
 
 ## Descripción
 
-Aplicación web que simula una tienda de indumentaria con un catálogo de remeras, buzos y pantalones. Permite buscar productos por nombre, filtrar por categoría, consultar su detalle y agregarlos a un carrito respetando el stock disponible.
+Aplicación web que simula una tienda de indumentaria con un catálogo de remeras, buzos y pantalones. No se realizan pagos reales.
 
-El carrito permite modificar cantidades, eliminar productos y consultar subtotales y total. La compra se completa de manera simulada mediante un formulario con validaciones y un mensaje de confirmación. También incluye acceso y registro simulados. No se realizan pagos reales.
+## Funcionalidades
+
+- Página de inicio con la identidad de la tienda y acceso al catálogo.
+- Catálogo de 12 productos con búsqueda por nombre (sin importar tildes), filtro por categoría y orden por precio.
+- Detalle de cada producto en `/producto/:id`, con descripción completa y características.
+- Carrito con cantidades, subtotales, total y unidades totales. No permite superar el stock disponible.
+- El carrito se guarda en `localStorage`, así que no se pierde al recargar la página.
+- Inicio de sesión y registro simulados, necesarios para finalizar la compra.
+- Formulario de compra con validaciones por campo y mensaje de confirmación con el resumen del pedido.
+- Página 404 para rutas inexistentes.
 
 ## Tecnologías
 
@@ -26,14 +35,24 @@ npm install
 npm run dev
 ```
 
-Abrir en el navegador la dirección que indique la terminal. La sesión y el carrito se mantienen durante la navegación, pero se reinician al recargar la página.
+Abrir en el navegador la dirección que indique la terminal. El carrito se conserva al recargar la página; la sesión, en cambio, se reinicia.
+
+## Estructura
+
+```
+src/
+  components/   Componentes reutilizables (Navbar, Footer, ProductoCard, CarritoItem, FormularioCompra)
+  pages/        Una página por ruta (Inicio, Productos, DetalleProducto, Carrito, Contacto, Acceso)
+  data/         Array de productos
+  utils/        Funciones auxiliares (formato de precios)
+  App.jsx       Rutas y estado del carrito
+  main.jsx      Punto de entrada
+```
 
 ## Integrantes
 
-| Nombre y apellido | DNI |
-| --- | ---: |
-| Sebastián Horacio Diaz | 34245773 |
-| Nahuel Solano | 46118948 |
-| Renzo Santino Dottori Giordano | 44595644 |
-| Magno Tellechea | 44098748 |
-| Jeremias Markevich | 43516255 |
+- Sebastián Horacio Diaz
+- Nahuel Solano
+- Renzo Santino Dottori Giordano
+- Magno Tellechea
+- Jeremias Markevich

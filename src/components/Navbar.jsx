@@ -13,7 +13,12 @@ function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
   return (
     <BsNavbar expand="md" bg="dark" data-bs-theme="dark" sticky="top">
       <Container>
-        <BsNavbar.Brand as={Link} to="/">
+        <BsNavbar.Brand
+          as={Link}
+          to="/"
+          className="d-flex align-items-center gap-2"
+        >
+          <img src="/logo.svg" alt="" width={32} height={32} />
           Tienda de Ropa
         </BsNavbar.Brand>
         <BsNavbar.Toggle aria-controls="menu-principal" />
@@ -28,7 +33,7 @@ function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/carrito">
               Carrito{" "}
-              <Badge bg="primary" pill>
+              <Badge bg="light" text="dark" pill>
                 {cantidadProductos}
               </Badge>
             </Nav.Link>

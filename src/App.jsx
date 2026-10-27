@@ -1,4 +1,3 @@
-import "./App.css";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Navbar from "./components/Navbar";
@@ -7,67 +6,86 @@ import Acceso from "./pages/Acceso";
 import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
 import Contacto from "./pages/Contacto";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import NoEncontrado from "./pages/NoEncontrado";
+import ScrollAlInicio from "./components/ScrollAlInicio";
+import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const CLAVE_CARRITO = "carrito";
+
+function cargarCarrito() {
+  try {
+    return JSON.parse(localStorage.getItem(CLAVE_CARRITO)) ?? [];
+  } catch {
+    return [];
+  }
+}
 
 function App() {
   const [usuario, setUsuario] = useState(null);
-  const [carrito, setCarrito] = useState([]);
-  const navigate = useNavigate();
-  const location = useLocation();
+  // Cada item del carrito es el producto más su cantidad: { ...producto, cantidad }
+  const [carrito, setCarrito] = useState(cargarCarrito);
+
+  // Guarda el carrito cada vez que cambia, así no se pierde al recargar
+  useEffect(() => {
+    localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
+  }, [carrito]);
+
+  const cantidadProductos = carrito.reduce(
+    (acumulado, item) => acumulado + item.cantidad,
+    0,
+  );
 
   function cerrarSesion() {
     setUsuario(null);
-    setCarrito([]);
   }
-
 
   function iniciarSesion(usuarioData) {
     setUsuario(usuarioData);
   }
 
   function agregarAlCarrito(producto) {
-    if (!usuario) {
-      navigate("/acceso?modo=login", { state: { from: location.pathname } });
-      return;
-    }
     setCarrito((carritoActual) => {
-      const cantidadActual = carritoActual.filter(
-        (item) => item.id === producto.id,
-      ).length;
+      const existente = carritoActual.find((item) => item.id === producto.id);
 
-      if (cantidadActual >= producto.stock) {
-        return carritoActual;
+      if (!existente) {
+        if (producto.stock <= 0) return carritoActual;
+        return [...carritoActual, { ...producto, cantidad: 1 }];
       }
 
-      return [...carritoActual, producto];
+      if (existente.cantidad >= producto.stock) return carritoActual;
+
+      return carritoActual.map((item) =>
+        item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item,
+      );
     });
   }
+
   function quitarUnaUnidad(id) {
-    setCarrito((carritoActual) => {
-      const indiceAEliminar = carritoActual.findIndex(
-        (producto) => producto.id === id,
-      );
-
-      if (indiceAEliminar === -1) return carritoActual;
-
-      return carritoActual.filter(
-        (_producto, indice) => indice !== indiceAEliminar,
-      );
-    });
-  }
-  function eliminarDelCarrito(id) {
     setCarrito((carritoActual) =>
-      carritoActual.filter((producto) => producto.id !== id),
+      carritoActual
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item,
+        )
+        .filter((item) => item.cantidad > 0),
     );
   }
+
+  function eliminarDelCarrito(id) {
+    setCarrito((carritoActual) =>
+      carritoActual.filter((item) => item.id !== id),
+    );
+  }
+
   function vaciarCarrito() {
     setCarrito([]);
   }
+
   return (
     <div className="d-flex flex-column min-vh-100">
+      <ScrollAlInicio />
       <Navbar
-        cantidadProductos={carrito.length}
+        cantidadProductos={cantidadProductos}
         usuario={usuario}
         onCerrarSesion={cerrarSesion}
       />
@@ -93,16 +111,25 @@ function App() {
             element={
               <Carrito
                 carrito={carrito}
+                cantidadProductos={cantidadProductos}
                 onAgregar={agregarAlCarrito}
                 onDisminuir={quitarUnaUnidad}
                 onEliminar={eliminarDelCarrito}
+                onVaciar={vaciarCarrito}
               />
             }
           />
           <Route
             path="/contacto"
-            element={<Contacto carrito={carrito} onConfirmar={vaciarCarrito} />}
+            element={
+              <Contacto
+                carrito={carrito}
+                usuario={usuario}
+                onConfirmar={vaciarCarrito}
+              />
+            }
           />
+          <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
       <Footer />

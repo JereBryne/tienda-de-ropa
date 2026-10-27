@@ -1,39 +1,53 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Container,Row, Col, Card, Alert, Button} from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Alert,
+  Button,
+  ListGroup,
+} from "react-bootstrap";
 import FormularioCompra from "../components/FormularioCompra";
+import { formatearPrecio } from "../utils/formato";
 
-function Contacto({ carrito, onConfirmar }) {
-  const [compraConfirmada, setCompraConfirmada] = useState(false);
+function calcularTotal(carrito) {
+  return carrito.reduce(
+    (acumulado, producto) => acumulado + producto.precio * producto.cantidad,
+    0,
+  );
+}
 
-  function confirmarCompra() {
-    if (carrito.length === 0) 
-      return;
+function Contacto({ carrito, usuario, onConfirmar }) {
+  // Guarda los datos de la compra confirmada para mostrarlos en el mensaje final
+  const [compraConfirmada, setCompraConfirmada] = useState(null);
 
-    setCompraConfirmada(true);
+  function confirmarCompra(datos) {
+    if (carrito.length === 0) return;
+
+    setCompraConfirmada({ datos, total: calcularTotal(carrito) });
     onConfirmar();
   }
 
   if (compraConfirmada) {
+    const { datos, total } = compraConfirmada;
     return (
       <Container className="py-5">
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <Alert variant="success" className="text-center">
-              <Alert.Heading>
-                Compra simulada confirmada
-              </Alert.Heading>
-
+              <Alert.Heading>¡Gracias por tu compra, {datos.nombre}!</Alert.Heading>
               <p>
-                Gracias por tu compra. Los datos fueron registrados
-                correctamente.
+                Registramos tu pedido por <strong>{formatearPrecio(total)}</strong>.
+                Te enviamos el detalle a <strong>{datos.email}</strong>.
               </p>
-
-              <Button
-                as={Link}
-                to="/productos"
-                variant="success"
-              >
+              <p>
+                {datos.entrega === "envio"
+                  ? `Lo enviaremos a ${datos.direccion}.`
+                  : "Podés retirarlo por el local cuando te avisemos."}
+              </p>
+              <Button as={Link} to="/productos" variant="success">
                 Volver al catálogo
               </Button>
             </Alert>
@@ -43,47 +57,99 @@ function Contacto({ carrito, onConfirmar }) {
     );
   }
 
+  if (carrito.length === 0) {
+    return (
+      <Container className="py-5">
+        <Row className="justify-content-center">
+          <Col xs={12} md={8} lg={6}>
+            <Alert variant="warning">
+              <Alert.Heading>El carrito está vacío</Alert.Heading>
+              <p>Agregá productos al carrito antes de continuar.</p>
+              <Button as={Link} to="/productos" variant="dark">
+                Ver productos
+              </Button>
+            </Alert>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+
+  if (!usuario) {
+    return (
+      <Container className="py-5">
+        <Row className="justify-content-center">
+          <Col xs={12} md={8} lg={6}>
+            <Alert variant="info">
+              <Alert.Heading>Iniciá sesión para finalizar la compra</Alert.Heading>
+              <p>Tu carrito queda guardado mientras tanto.</p>
+              <div className="d-flex flex-wrap gap-2">
+                <Button
+                  as={Link}
+                  to="/acceso?modo=login"
+                  state={{ from: "/contacto" }}
+                  variant="dark"
+                >
+                  Iniciar sesión
+                </Button>
+                <Button
+                  as={Link}
+                  to="/acceso?modo=registro"
+                  state={{ from: "/contacto" }}
+                  variant="outline-dark"
+                >
+                  Crear cuenta
+                </Button>
+              </div>
+            </Alert>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+
   return (
     <Container className="py-5">
-      <Row className="justify-content-center">
-        <Col xs={12} md={10} lg={7}>
+      <h1 className="mb-4">Finalizar compra</h1>
+      <Row className="g-4">
+        <Col lg={7}>
           <Card className="border-0 shadow-sm">
-            <Card.Body className="p-4 p-md-5">
+            <Card.Body className="p-4">
+              <p className="text-muted mb-4">
+                Completá tus datos para confirmar la compra.
+              </p>
+              <FormularioCompra
+                emailInicial={usuario.email}
+                onConfirmar={confirmarCompra}
+              />
+            </Card.Body>
+          </Card>
+        </Col>
 
-              <h1 className="mb-3">
-                Finalizar compra
-              </h1>
-
-              {carrito.length === 0 ? (
-                <Alert variant="warning">
-                  <Alert.Heading>
-                    El carrito está vacío
-                  </Alert.Heading>
-
-                  <p>
-                    Agregá productos al carrito antes de continuar.
-                  </p>
-
-                  <Button
-                    as={Link}
-                    to="/productos"
-                    variant="dark"
+        <Col lg={5}>
+          <Card className="border-0 shadow-sm">
+            <Card.Body>
+              <Card.Title>Tu pedido</Card.Title>
+              <ListGroup variant="flush" className="mb-3">
+                {carrito.map((producto) => (
+                  <ListGroup.Item
+                    key={producto.id}
+                    className="d-flex justify-content-between px-0"
                   >
-                    Ver productos
-                  </Button>
-                </Alert>
-              ) : (
-                <>
-                  <p className="text-muted mb-4">
-                    Completá tus datos para confirmar la compra.
-                  </p>
-
-                  <FormularioCompra
-                    onConfirmar={confirmarCompra}
-                  />
-                </>
-              )}
-
+                    <span>
+                      {producto.nombre} × {producto.cantidad}
+                    </span>
+                    <span>{formatearPrecio(producto.precio * producto.cantidad)}</span>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              <div className="d-flex justify-content-between fs-5 fw-bold">
+                <span>Total</span>
+                <span>{formatearPrecio(calcularTotal(carrito))}</span>
+              </div>
+              <Link to="/carrito" className="d-block mt-3 text-dark small">
+                Modificar carrito
+              </Link>
             </Card.Body>
           </Card>
         </Col>

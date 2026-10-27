@@ -6,6 +6,15 @@ export const productos = [
     precio: 12000,
     stock: 10,
     imagen: "/img/productos/01-remera-basica.png",
+    descripcion: "Remera de algodón lisa, ideal para el día a día.",
+    descripcionCompleta:
+      "Remera básica de algodón peinado con calce regular. Es suave, fresca y fácil de combinar, pensada para usar sola o como base de cualquier outfit.",
+    caracteristicas: [
+      "100% algodón peinado",
+      "Cuello redondo",
+      "Calce regular",
+      "Talles S a XXL",
+    ],
   },
   {
     id: 2,
@@ -14,6 +23,15 @@ export const productos = [
     precio: 25000,
     stock: 5,
     imagen: "/img/productos/02-buzo-con-capucha.png",
+    descripcion: "Buzo de frisa con capucha y bolsillo canguro.",
+    descripcionCompleta:
+      "Buzo con capucha de frisa invisible, abrigado y liviano. Tiene capucha con cordón regulable, bolsillo canguro y puños elastizados para los días frescos.",
+    caracteristicas: [
+      "Frisa invisible 80% algodón",
+      "Capucha con cordón regulable",
+      "Bolsillo canguro",
+      "Puños y cintura con rib",
+    ],
   },
   {
     id: 3,
@@ -22,6 +40,15 @@ export const productos = [
     precio: 60000,
     stock: 8,
     imagen: "/img/productos/03-jean.png",
+    descripcion: "Jean clásico de denim rígido, corte recto.",
+    descripcionCompleta:
+      "Jean de corte recto confeccionado en denim de alta resistencia. Un clásico de cinco bolsillos que mejora con el uso y combina con todo.",
+    caracteristicas: [
+      "Denim 100% algodón",
+      "Corte recto",
+      "Cinco bolsillos",
+      "Cierre con botón metálico",
+    ],
   },
   {
     id: 4,
@@ -30,6 +57,15 @@ export const productos = [
     precio: 16000,
     stock: 7,
     imagen: "/img/productos/04-remera-estampada.png",
+    descripcion: "Remera de algodón con estampa de diseño propio.",
+    descripcionCompleta:
+      "Remera de algodón con estampa frontal en serigrafía, diseñada por nuestro equipo. La tinta es resistente a los lavados para que el diseño dure.",
+    caracteristicas: [
+      "100% algodón",
+      "Estampa en serigrafía",
+      "Diseño exclusivo",
+      "Talles S a XL",
+    ],
   },
   {
     id: 5,
@@ -38,6 +74,15 @@ export const productos = [
     precio: 18000,
     stock: 6,
     imagen: "/img/productos/05-remera-oversize.png",
+    descripcion: "Remera de calce amplio y hombros caídos.",
+    descripcionCompleta:
+      "Remera oversize de algodón pesado, con hombros caídos y largo extendido. Tiene un calce relajado y una caída que no se deforma.",
+    caracteristicas: [
+      "Algodón de 24/1 de alto gramaje",
+      "Calce oversize",
+      "Hombros caídos",
+      "Talles M a XXL",
+    ],
   },
   {
     id: 6,
@@ -46,6 +91,15 @@ export const productos = [
     precio: 20000,
     stock: 0,
     imagen: "/img/productos/06-remera-manga-larga.png",
+    descripcion: "Remera de manga larga para media estación.",
+    descripcionCompleta:
+      "Remera de manga larga en algodón con un toque de elastano. Es ideal para media estación o como primera capa en invierno.",
+    caracteristicas: [
+      "95% algodón, 5% elastano",
+      "Manga larga con puño",
+      "Calce regular",
+      "Talles S a XL",
+    ],
   },
   {
     id: 7,
@@ -54,6 +108,15 @@ export const productos = [
     precio: 28000,
     stock: 9,
     imagen: "/img/productos/07-buzo-cuello-redondo.png",
+    descripcion: "Buzo de frisa con cuello redondo, sin capucha.",
+    descripcionCompleta:
+      "Buzo de cuello redondo en frisa de algodón. Tiene un diseño simple y versátil que funciona tanto para salir como para estar en casa.",
+    caracteristicas: [
+      "Frisa 80% algodón",
+      "Cuello redondo con rib",
+      "Puños y cintura elastizados",
+      "Talles S a XXL",
+    ],
   },
   {
     id: 8,
@@ -62,6 +125,15 @@ export const productos = [
     precio: 35000,
     stock: 4,
     imagen: "/img/productos/08-buzo-con-cierre.png",
+    descripcion: "Buzo con cierre completo y bolsillos laterales.",
+    descripcionCompleta:
+      "Buzo con cierre frontal completo y capucha. Tiene dos bolsillos laterales y es fácil de poner y sacar, ideal para usar en capas.",
+    caracteristicas: [
+      "Frisa 80% algodón",
+      "Cierre frontal metálico",
+      "Bolsillos laterales",
+      "Capucha con cordón",
+    ],
   },
   {
     id: 9,
@@ -70,6 +142,15 @@ export const productos = [
     precio: 32000,
     stock: 0,
     imagen: "/img/productos/09-buzo-oversize.png",
+    descripcion: "Buzo amplio de frisa pesada, súper abrigado.",
+    descripcionCompleta:
+      "Buzo de calce oversize en frisa pesada, con hombros caídos. Es muy abrigado y tiene la onda urbana que se usa hoy.",
+    caracteristicas: [
+      "Frisa pesada de 400 g",
+      "Calce oversize",
+      "Hombros caídos",
+      "Talles M a XXL",
+    ],
   },
   {
     id: 10,
@@ -78,6 +159,15 @@ export const productos = [
     precio: 48000,
     stock: 6,
     imagen: "/img/productos/10-pantalon-cargo.png",
+    descripcion: "Pantalón de gabardina con bolsillos cargo.",
+    descripcionCompleta:
+      "Pantalón cargo de gabardina resistente, con bolsillos laterales con tapa. Es cómodo y funcional, con cintura regulable.",
+    caracteristicas: [
+      "Gabardina de algodón",
+      "Seis bolsillos",
+      "Bolsillos cargo con tapa",
+      "Cintura con cordón regulable",
+    ],
   },
   {
     id: 11,
@@ -86,6 +176,15 @@ export const productos = [
     precio: 38000,
     stock: 12,
     imagen: "/img/productos/11-pantalon-jogger.png",
+    descripcion: "Jogger de frisa con puño elastizado.",
+    descripcionCompleta:
+      "Pantalón jogger de frisa con puño elastizado en el tobillo y cintura con cordón. Es la opción más cómoda para el día a día.",
+    caracteristicas: [
+      "Frisa 80% algodón",
+      "Puño elastizado",
+      "Cintura con cordón",
+      "Bolsillos laterales",
+    ],
   },
   {
     id: 12,
@@ -94,5 +193,14 @@ export const productos = [
     precio: 55000,
     stock: 3,
     imagen: "/img/productos/12-pantalon-de-vestir.png",
+    descripcion: "Pantalón de sastrería de corte recto.",
+    descripcionCompleta:
+      "Pantalón de vestir de corte recto en tela de sastrería con una leve elasticidad. Es elegante y cómodo, para la oficina o un evento.",
+    caracteristicas: [
+      "Tela de sastrería con elastano",
+      "Corte recto",
+      "Pinzas delanteras",
+      "Cierre con botón y gancho",
+    ],
   },
 ];
