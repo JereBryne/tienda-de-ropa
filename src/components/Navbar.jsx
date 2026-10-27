@@ -40,6 +40,10 @@ function Navbar({ cantidadProductos, tema, onCambiarTema }) {
             <Nav.Link as={NavLink} to="/contacto">
               Finalizar compra
             </Nav.Link>
+
+            <Nav.Link as={NavLink} to="/nosotros">
+              Nosotros
+            </Nav.Link>
           </Nav>
         </NavBs.Collapse>
       </Container>

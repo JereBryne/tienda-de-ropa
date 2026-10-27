@@ -5,6 +5,7 @@ import Carrito from "./pages/Carrito";
 import Inicio from "./pages/Inicio";
 import Footer from "./components/Footer";
 import Contacto from "./pages/Contacto";
+import Nosotros from "./pages/Nosotros";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -135,6 +136,7 @@ function App() {
           path="/contacto"
           element={<Contacto carrito={carrito} onConfirmar={vaciarCarrito} />}
         />
+        <Route path="/nosotros" element={<Nosotros />} />
       </Routes>
       <Footer />
     </div>

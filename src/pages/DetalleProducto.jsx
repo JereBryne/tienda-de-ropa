@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { productos } from "../data/productos";
+import { Button } from "react-bootstrap";
 
 function DetalleProducto({ carrito, onAgregar, favoritos, onFavoritos }) {
   const { id } = useParams();
@@ -27,21 +28,23 @@ function DetalleProducto({ carrito, onAgregar, favoritos, onFavoritos }) {
           ? `Stock disponible: ${stockDisponible}`
           : "Sin stock"}
       </p>
-      <button
-        type="button"
+      <Button
+        variant="secondary"
         disabled={stockDisponible <= 0}
         onClick={() => onAgregar(producto)}
       >
         Agregar al carrito
-      </button>
-       <button
-        type="button"
+      </Button>
+      <Button
+        variant="outline-danger"
         onClick={() => onFavoritos(producto.id)}
         aria-pressed={esFavorito}
       >
-        {esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
-      </button>
-      <Link to="/productos">Volver al catálogo</Link>
+        {esFavorito ? "❤︎︎" : "♡︎"}
+      </Button>
+      <Button variant="outline-secondary" href="/productos">
+        Volver al catálogo
+      </Button>
     </main>
   );
 }
