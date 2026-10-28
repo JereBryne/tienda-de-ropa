@@ -18,7 +18,7 @@ function CarritoItem({ producto, onAgregar, onDisminuir, onEliminar }) {
         <Col xs={9} md={4}>
           <Link
             to={`/producto/${producto.id}`}
-            className="fw-semibold text-dark text-decoration-none"
+            className="fw-semibold link-body-emphasis text-decoration-none"
           >
             {producto.nombre}
           </Link>
@@ -37,7 +37,7 @@ function CarritoItem({ producto, onAgregar, onDisminuir, onEliminar }) {
             >
               −
             </Button>
-            <Button variant="outline-dark" disabled className="px-3 text-dark">
+            <Button variant="outline-dark" disabled className="px-3 text-body">
               {producto.cantidad}
             </Button>
             <Button

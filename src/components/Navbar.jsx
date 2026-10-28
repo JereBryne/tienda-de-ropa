@@ -7,11 +7,17 @@ import {
 } from "react-bootstrap";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
+function Navbar({
+  cantidadProductos,
+  usuario,
+  onCerrarSesion,
+  tema,
+  onCambiarTema,
+}) {
   const location = useLocation();
 
   return (
-    <BsNavbar expand="md" bg="dark" data-bs-theme="dark" sticky="top">
+    <BsNavbar expand="lg" bg="dark" data-bs-theme="dark" sticky="top">
       <Container>
         <BsNavbar.Brand
           as={Link}
@@ -40,12 +46,26 @@ function Navbar({ cantidadProductos, usuario, onCerrarSesion }) {
             <Nav.Link as={NavLink} to="/contacto">
               Finalizar compra
             </Nav.Link>
+            <Nav.Link as={NavLink} to="/nosotros">
+              Nosotros
+            </Nav.Link>
           </Nav>
 
-          <Nav className="align-items-md-center">
+          <Nav className="align-items-lg-center gap-lg-2">
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="align-self-start align-self-lg-center my-2 my-lg-0"
+              onClick={onCambiarTema}
+              aria-label={
+                tema === "light" ? "Activar modo oscuro" : "Activar modo claro"
+              }
+            >
+              {tema === "light" ? "☾ Oscuro" : "☀ Claro"}
+            </Button>
             {usuario ? (
               <>
-                <span className="navbar-text me-md-3">
+                <span className="navbar-text me-lg-2">
                   Bienvenido, {usuario.name}
                 </span>
                 <Button

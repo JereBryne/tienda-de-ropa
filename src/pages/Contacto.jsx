@@ -11,22 +11,19 @@ import {
 } from "react-bootstrap";
 import FormularioCompra from "../components/FormularioCompra";
 import { formatearPrecio } from "../utils/formato";
+import { calcularTotales } from "../utils/carrito";
 
-function calcularTotal(carrito) {
-  return carrito.reduce(
-    (acumulado, producto) => acumulado + producto.precio * producto.cantidad,
-    0,
-  );
-}
-
-function Contacto({ carrito, usuario, onConfirmar }) {
+function Contacto({ carrito, cupon, usuario, onConfirmar }) {
   // Guarda los datos de la compra confirmada para mostrarlos en el mensaje final
   const [compraConfirmada, setCompraConfirmada] = useState(null);
 
   function confirmarCompra(datos) {
     if (carrito.length === 0) return;
 
-    setCompraConfirmada({ datos, total: calcularTotal(carrito) });
+    setCompraConfirmada({
+      datos,
+      total: calcularTotales(carrito, cupon).total,
+    });
     onConfirmar();
   }
 
@@ -37,10 +34,13 @@ function Contacto({ carrito, usuario, onConfirmar }) {
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <Alert variant="success" className="text-center">
-              <Alert.Heading>¡Gracias por tu compra, {datos.nombre}!</Alert.Heading>
+              <Alert.Heading>
+                ¡Gracias por tu compra, {datos.nombre}!
+              </Alert.Heading>
               <p>
-                Registramos tu pedido por <strong>{formatearPrecio(total)}</strong>.
-                Te enviamos el detalle a <strong>{datos.email}</strong>.
+                Registramos tu pedido por{" "}
+                <strong>{formatearPrecio(total)}</strong>. Te enviamos el
+                detalle a <strong>{datos.email}</strong>.
               </p>
               <p>
                 {datos.entrega === "envio"
@@ -81,7 +81,9 @@ function Contacto({ carrito, usuario, onConfirmar }) {
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <Alert variant="info">
-              <Alert.Heading>Iniciá sesión para finalizar la compra</Alert.Heading>
+              <Alert.Heading>
+                Iniciá sesión para finalizar la compra
+              </Alert.Heading>
               <p>Tu carrito queda guardado mientras tanto.</p>
               <div className="d-flex flex-wrap gap-2">
                 <Button
@@ -107,6 +109,8 @@ function Contacto({ carrito, usuario, onConfirmar }) {
       </Container>
     );
   }
+
+  const { subtotal, descuento, total } = calcularTotales(carrito, cupon);
 
   return (
     <Container className="py-5">
@@ -139,15 +143,32 @@ function Contacto({ carrito, usuario, onConfirmar }) {
                     <span>
                       {producto.nombre} × {producto.cantidad}
                     </span>
-                    <span>{formatearPrecio(producto.precio * producto.cantidad)}</span>
+                    <span>
+                      {formatearPrecio(producto.precio * producto.cantidad)}
+                    </span>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
+              {cupon && (
+                <>
+                  <div className="d-flex justify-content-between">
+                    <span>Subtotal</span>
+                    <span>{formatearPrecio(subtotal)}</span>
+                  </div>
+                  <div className="d-flex justify-content-between text-success mb-2">
+                    <span>Descuento {cupon.codigo}</span>
+                    <span>−{formatearPrecio(descuento)}</span>
+                  </div>
+                </>
+              )}
               <div className="d-flex justify-content-between fs-5 fw-bold">
                 <span>Total</span>
-                <span>{formatearPrecio(calcularTotal(carrito))}</span>
+                <span>{formatearPrecio(total)}</span>
               </div>
-              <Link to="/carrito" className="d-block mt-3 text-dark small">
+              <Link
+                to="/carrito"
+                className="d-block mt-3 link-body-emphasis small"
+              >
                 Modificar carrito
               </Link>
             </Card.Body>

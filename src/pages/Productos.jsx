@@ -3,20 +3,20 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import ProductoCard from "../components/ProductoCard";
 import { productos } from "../data/productos";
 
-const categorias = [...new Set(productos.map((producto) => producto.categoria))];
+const categorias = [
+  ...new Set(productos.map((producto) => producto.categoria)),
+];
 
 /* Normalizo texto para que no importen mayúsculas ni tildes */
 function normalizarTexto(texto) {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
+  return texto.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-function Productos({ carrito, onAgregar }) {
+function Productos({ carrito, onAgregar, favoritos, onFavorito }) {
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
   const [orden, setOrden] = useState("");
+  const [soloFavoritos, setSoloFavoritos] = useState(false);
 
   const productosFiltrados = productos.filter((producto) => {
     const coincideNombre = normalizarTexto(producto.nombre).includes(
@@ -24,7 +24,8 @@ function Productos({ carrito, onAgregar }) {
     );
     const coincideCategoria =
       categoria === "" || producto.categoria === categoria;
-    return coincideNombre && coincideCategoria;
+    const coincideFavoritos = !soloFavoritos || favoritos.includes(producto.id);
+    return coincideNombre && coincideCategoria && coincideFavoritos;
   });
 
   // sort modifica el array, por eso ordeno una copia
@@ -43,7 +44,7 @@ function Productos({ carrito, onAgregar }) {
       <h1 className="mb-4">Productos</h1>
 
       <Row className="g-3 mb-4">
-        <Col md={6}>
+        <Col md={4}>
           <Form.Label htmlFor="busqueda">Buscar producto</Form.Label>
           <Form.Control
             id="busqueda"
@@ -80,6 +81,16 @@ function Productos({ carrito, onAgregar }) {
             <option value="mayor">Precio: mayor a menor</option>
           </Form.Select>
         </Col>
+        <Col md={2} className="d-flex align-items-end">
+          <Form.Check
+            type="switch"
+            id="solo-favoritos"
+            label="Solo favoritos"
+            className="mb-md-2"
+            checked={soloFavoritos}
+            onChange={(evento) => setSoloFavoritos(evento.target.checked)}
+          />
+        </Col>
       </Row>
 
       <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
@@ -89,6 +100,8 @@ function Productos({ carrito, onAgregar }) {
               producto={producto}
               onAgregar={onAgregar}
               cantidadEnCarrito={cantidadEnCarrito(producto.id)}
+              esFavorito={favoritos.includes(producto.id)}
+              onFavorito={onFavorito}
             />
           </Col>
         ))}
@@ -96,7 +109,9 @@ function Productos({ carrito, onAgregar }) {
 
       {productosOrdenados.length === 0 && (
         <p className="text-center text-muted mt-4">
-          No encontramos productos con esos filtros
+          {soloFavoritos && favoritos.length === 0
+            ? "Todavía no marcaste productos como favoritos"
+            : "No encontramos productos con esos filtros"}
         </p>
       )}
     </Container>

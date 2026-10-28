@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Badge, Alert } from "react-bootstrap";
 import { productos } from "../data/productos";
 import { formatearPrecio } from "../utils/formato";
 
-function DetalleProducto({ carrito, onAgregar }) {
+function DetalleProducto({ carrito, onAgregar, favoritos, onFavorito }) {
   const { id } = useParams();
   const producto = productos.find((producto) => producto.id === Number(id));
   if (!producto) {
@@ -20,6 +20,7 @@ function DetalleProducto({ carrito, onAgregar }) {
     carrito.find((item) => item.id === producto.id)?.cantidad ?? 0;
   const stockDisponible = producto.stock - cantidadEnCarrito;
   const sinStock = producto.stock === 0;
+  const esFavorito = favoritos.includes(producto.id);
 
   return (
     <Container className="py-4">
@@ -73,8 +74,16 @@ function DetalleProducto({ carrito, onAgregar }) {
                   ? "Máximo en carrito"
                   : "Agregar al carrito"}
             </Button>
+            <Button
+              variant="outline-danger"
+              size="lg"
+              onClick={() => onFavorito(producto.id)}
+              aria-pressed={esFavorito}
+            >
+              {esFavorito ? "♥ En favoritos" : "♡ Agregar a favoritos"}
+            </Button>
             {cantidadEnCarrito > 0 && (
-              <Link to="/carrito" className="text-dark">
+              <Link to="/carrito" className="link-body-emphasis">
                 Tenés {cantidadEnCarrito} en el carrito
               </Link>
             )}
