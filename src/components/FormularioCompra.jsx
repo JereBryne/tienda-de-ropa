@@ -1,10 +1,40 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-function FormularioCompra({ onConfirmar }) {
+function validar(datos) {
+  const errores = {};
+
+  if (!datos.nombre.trim()) {
+    errores.nombre = "Ingresá tu nombre y apellido.";
+  }
+
+  if (!datos.email.trim()) {
+    errores.email = "Ingresá tu email.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datos.email.trim())) {
+    errores.email = "Ingresá un email válido.";
+  }
+
+  if (!datos.telefono.trim()) {
+    errores.telefono = "Ingresá tu teléfono.";
+  } else if (!/^[\d\s()+-]{8,}$/.test(datos.telefono.trim())) {
+    errores.telefono = "Ingresá un teléfono válido (solo números, mínimo 8).";
+  }
+
+  if (datos.entrega === "envio" && !datos.direccion.trim()) {
+    errores.direccion = "Ingresá tu dirección o localidad.";
+  }
+
+  if (!datos.entrega) {
+    errores.entrega = "Elegí un método de entrega.";
+  }
+
+  return errores;
+}
+
+function FormularioCompra({ emailInicial = "", onConfirmar }) {
   const [datos, setDatos] = useState({
     nombre: "",
-    email: "",
+    email: emailInicial,
     telefono: "",
     direccion: "",
     entrega: "",
@@ -24,41 +54,21 @@ function FormularioCompra({ onConfirmar }) {
 
   function enviarFormulario(evento) {
     evento.preventDefault();
-    const nuevo = validarCampo();
-    setErrores(nuevo);
-    if (Object.keys(nuevo).length === 0) {
-      onConfirmar(datos);
-    }
-  }
 
-  function validarCampo() {
-    const nuevos = {};
-    if (!datos.nombre.trim()) {
-      nuevos.nombre = "El nombre es obligatorio";
-    }
-    if (!datos.email.trim()) {
-      nuevos.email = "El email es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(datos.email)) {
-      nuevos.email = "El email no es válido";
-    }
+    const nuevosErrores = validar(datos);
+    setErrores(nuevosErrores);
 
-    if (!datos.telefono.trim()) {
-      nuevos.telefono = "El teléfono es obligatorio";
+    if (Object.keys(nuevosErrores).length === 0) {
+      const datosFinales =
+        datos.entrega === "envio" ? datos : { ...datos, direccion: "" };
+      onConfirmar(datosFinales);
     }
-    if (!datos.direccion.trim()) {
-      nuevos.direccion = "La dirección es obligatoria";
-    }
-    if (!datos.entrega.trim()) {
-      nuevos.entrega = "El método de entrega es obligatorio";
-    }
-    return nuevos;
   }
 
   return (
     <Form onSubmit={enviarFormulario} noValidate>
       <Form.Group className="mb-3" controlId="nombre">
         <Form.Label>Nombre y apellido</Form.Label>
-
         <Form.Control
           name="nombre"
           type="text"
@@ -74,7 +84,6 @@ function FormularioCompra({ onConfirmar }) {
 
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email</Form.Label>
-
         <Form.Control
           name="email"
           type="email"
@@ -90,7 +99,6 @@ function FormularioCompra({ onConfirmar }) {
 
       <Form.Group className="mb-3" controlId="telefono">
         <Form.Label>Teléfono</Form.Label>
-
         <Form.Control
           name="telefono"
           type="tel"
@@ -104,25 +112,8 @@ function FormularioCompra({ onConfirmar }) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="direccion">
-        <Form.Label>Dirección o localidad</Form.Label>
-
-        <Form.Control
-          name="direccion"
-          type="text"
-          placeholder="Ingresá tu dirección o localidad"
-          value={datos.direccion}
-          onChange={cambiarCampo}
-          isInvalid={!!errores.direccion}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errores.direccion}
-        </Form.Control.Feedback>
-      </Form.Group>
-
       <Form.Group className="mb-3" controlId="entrega">
         <Form.Label>Método de entrega</Form.Label>
-
         <Form.Select
           name="entrega"
           value={datos.entrega}
@@ -138,9 +129,25 @@ function FormularioCompra({ onConfirmar }) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="mensaje">
-        <Form.Label>Aclaración opcional</Form.Label>
+      {datos.entrega === "envio" && (
+        <Form.Group className="mb-3" controlId="direccion">
+          <Form.Label>Dirección o localidad</Form.Label>
+          <Form.Control
+            name="direccion"
+            type="text"
+            placeholder="Ingrese la direccion de entrega"
+            value={datos.direccion}
+            onChange={cambiarCampo}
+            isInvalid={!!errores.direccion}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errores.direccion}
+          </Form.Control.Feedback>
+        </Form.Group>
+      )}
 
+      <Form.Group className="mb-3" controlId="mensaje">
+        <Form.Label>Aclaración (opcional)</Form.Label>
         <Form.Control
           as="textarea"
           rows={3}
@@ -148,14 +155,10 @@ function FormularioCompra({ onConfirmar }) {
           placeholder="Podés agregar una aclaración"
           value={datos.mensaje}
           onChange={cambiarCampo}
-          isInvalid={!!errores.mensaje}
         />
-        <Form.Control.Feedback type="invalid">
-          {errores.mensaje}
-        </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit" variant="outline-success" size="lg" className="w-100">
+      <Button type="submit" variant="dark" size="lg" className="w-100">
         Confirmar compra
       </Button>
     </Form>

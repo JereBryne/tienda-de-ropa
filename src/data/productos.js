@@ -5,6 +5,17 @@ export const productos = [
     categoria: "Remeras",
     precio: 12000,
     stock: 10,
+    imagen: "/img/productos/01-remera-basica.png",
+    descripcion: "Remera de algodón de corte clásico para todos los días.",
+    descripcionCompleta:
+      "Remera básica de algodón, suave y cómoda. Su corte clásico permite combinarla con jeans, pantalones cargo o joggers para un uso cotidiano.",
+    caracteristicas: [
+      "Material: algodón",
+      "Corte clásico",
+      "Cuello redondo",
+      "Mangas cortas",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 2,
@@ -12,6 +23,17 @@ export const productos = [
     categoria: "Buzos",
     precio: 25000,
     stock: 5,
+    imagen: "/img/productos/02-buzo-con-capucha.png",
+    descripcion: "Buzo con capucha y bolsillo delantero.",
+    descripcionCompleta:
+      "Buzo de algodón con interior abrigado, capucha ajustable y bolsillo delantero. Su corte cómodo permite usarlo sobre una remera para acompañar los días frescos.",
+    caracteristicas: [
+      "Material: algodón",
+      "Capucha con cordón ajustable",
+      "Bolsillo delantero",
+      "Puños y cintura elastizados",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 3,
@@ -19,6 +41,17 @@ export const productos = [
     categoria: "Pantalones",
     precio: 60000,
     stock: 8,
+    imagen: "/img/productos/03-jean.png",
+    descripcion: "Jean de corte recto para combinar todos los días.",
+    descripcionCompleta:
+      "Pantalón de denim de corte recto y diseño clásico. Una prenda versátil para combinar con remeras o buzos y usar en distintas ocasiones cotidianas.",
+    caracteristicas: [
+      "Material: denim",
+      "Corte recto",
+      "Cierre con botón y cremallera",
+      "Bolsillos delanteros y traseros",
+      "Talles: 38, 40, 42, 44 y 46",
+    ],
   },
   {
     id: 4,
@@ -26,6 +59,17 @@ export const productos = [
     categoria: "Remeras",
     precio: 16000,
     stock: 7,
+    imagen: "/img/productos/04-remera-estampada.png",
+    descripcion: "Remera de manga corta con estampa frontal.",
+    descripcionCompleta:
+      "Remera de algodón con estampa frontal y corte clásico. Una prenda cómoda para combinar con jeans o pantalones y darle un toque distinto a tu vestimenta cotidiana.",
+    caracteristicas: [
+      "Material: algodón",
+      "Estampa frontal",
+      "Cuello redondo",
+      "Mangas cortas",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 5,
@@ -33,6 +77,17 @@ export const productos = [
     categoria: "Remeras",
     precio: 18000,
     stock: 6,
+    imagen: "/img/productos/05-remera-oversize.png",
+    descripcion: "Remera de calce amplio para un estilo relajado.",
+    descripcionCompleta:
+      "Remera de algodón con corte amplio y hombros caídos. Su calce holgado ofrece comodidad y libertad de movimiento, ideal para combinar con prendas de estilo urbano.",
+    caracteristicas: [
+      "Material: algodón",
+      "Calce oversize",
+      "Hombros caídos",
+      "Mangas cortas",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 6,
@@ -40,6 +95,17 @@ export const productos = [
     categoria: "Remeras",
     precio: 20000,
     stock: 0,
+    imagen: "/img/productos/06-remera-manga-larga.png",
+    descripcion: "Remera de manga larga para días frescos.",
+    descripcionCompleta:
+      "Remera de algodón de manga larga y corte clásico. Puede usarse sola o debajo de un buzo, ofreciendo una alternativa cómoda para los días de temperatura intermedia.",
+    caracteristicas: [
+      "Material: algodón",
+      "Corte clásico",
+      "Cuello redondo",
+      "Mangas largas",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 7,
@@ -47,6 +113,17 @@ export const productos = [
     categoria: "Buzos",
     precio: 28000,
     stock: 9,
+    imagen: "/img/productos/07-buzo-cuello-redondo.png",
+    descripcion: "Buzo clásico de cuello redondo, cómodo y abrigado.",
+    descripcionCompleta:
+      "Buzo de algodón de corte clásico y cuello redondo. Su diseño sencillo permite combinarlo con jeans, pantalones cargo o joggers para un uso cotidiano.",
+    caracteristicas: [
+      "Material: algodón",
+      "Cuello redondo",
+      "Sin capucha",
+      "Puños y cintura elastizados",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 8,
@@ -54,6 +131,17 @@ export const productos = [
     categoria: "Buzos",
     precio: 35000,
     stock: 4,
+    imagen: "/img/productos/08-buzo-con-cierre.png",
+    descripcion: "Buzo con cierre frontal para regular el abrigo.",
+    descripcionCompleta:
+      "Buzo de algodón con cierre frontal completo. Una opción práctica para usar abierto sobre una remera o cerrado cuando baja la temperatura.",
+    caracteristicas: [
+      "Material: algodón",
+      "Cierre frontal completo",
+      "Bolsillos laterales",
+      "Puños elastizados",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 9,
@@ -61,6 +149,17 @@ export const productos = [
     categoria: "Buzos",
     precio: 32000,
     stock: 0,
+    imagen: "/img/productos/09-buzo-oversize.png",
+    descripcion: "Buzo de calce amplio y estilo urbano.",
+    descripcionCompleta:
+      "Buzo de algodón con corte holgado y hombros caídos. Su diseño prioriza la comodidad y permite combinarlo con otras prendas amplias para un estilo relajado.",
+    caracteristicas: [
+      "Material: algodón",
+      "Calce oversize",
+      "Hombros caídos",
+      "Puños elastizados",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 10,
@@ -68,6 +167,17 @@ export const productos = [
     categoria: "Pantalones",
     precio: 48000,
     stock: 6,
+    imagen: "/img/productos/10-pantalon-cargo.png",
+    descripcion: "Pantalón cargo con bolsillos laterales y calce cómodo.",
+    descripcionCompleta:
+      "Pantalón de gabardina con corte relajado y bolsillos laterales. Su diseño práctico permite llevar objetos pequeños y combinarlo con prendas de estilo urbano.",
+    caracteristicas: [
+      "Material: gabardina",
+      "Corte relajado",
+      "Bolsillos laterales tipo cargo",
+      "Presillas para cinturón",
+      "Talles: 38, 40, 42, 44 y 46",
+    ],
   },
   {
     id: 11,
@@ -75,6 +185,17 @@ export const productos = [
     categoria: "Pantalones",
     precio: 38000,
     stock: 12,
+    imagen: "/img/productos/11-pantalon-jogger.png",
+    descripcion: "Jogger con cintura ajustable y puños en los tobillos.",
+    descripcionCompleta:
+      "Pantalón de algodón de calce cómodo, con cintura elastizada y cordón de ajuste. Ideal para actividades cotidianas o momentos de descanso.",
+    caracteristicas: [
+      "Material: algodón",
+      "Cintura elastizada",
+      "Cordón de ajuste",
+      "Puños en los tobillos",
+      "Talles: S, M, L y XL",
+    ],
   },
   {
     id: 12,
@@ -82,5 +203,16 @@ export const productos = [
     categoria: "Pantalones",
     precio: 55000,
     stock: 3,
+    imagen: "/img/productos/12-pantalon-de-vestir.png",
+    descripcion: "Pantalón de corte clásico para ocasiones formales.",
+    descripcionCompleta:
+      "Pantalón de vestir de corte recto y terminación prolija. Puede combinarse con una camisa para ocasiones formales o con una remera para un estilo más informal.",
+    caracteristicas: [
+      "Material: tejido de poliéster y viscosa",
+      "Corte recto",
+      "Cierre con botón y cremallera",
+      "Bolsillos laterales",
+      "Talles: 38, 40, 42, 44 y 46",
+    ],
   },
 ];
