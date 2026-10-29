@@ -7,11 +7,6 @@ import {
 } from "react-bootstrap";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-const from =
-  location.pathname === "/acceso"
-    ? (location.state?.from ?? "/")
-    : location.pathname;
-
 function Navbar({
   cantidadProductos,
   usuario,
@@ -20,6 +15,10 @@ function Navbar({
   onCambiarTema,
 }) {
   const location = useLocation();
+  const from =
+    location.pathname === "/acceso"
+      ? (location.state?.from ?? "/")
+      : location.pathname;
 
   return (
     <BsNavbar expand="lg" bg="dark" data-bs-theme="dark" sticky="top">

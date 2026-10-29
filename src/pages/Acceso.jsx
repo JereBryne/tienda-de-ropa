@@ -40,11 +40,7 @@ function Acceso({ onIniciarSesion }) {
     }
     if (formData.email.trim() === "") {
       newErrors.email = "El campo correo electrónico está vacío.";
-    } else if (
-      !formData.email.includes(
-        "/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim()).",
-      )
-    ) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = "El correo electrónico es inválido.";
     }
 
