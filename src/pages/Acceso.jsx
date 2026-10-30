@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 
 function Acceso({ onIniciarSesion }) {
   const [searchParams] = useSearchParams();
@@ -39,7 +40,7 @@ function Acceso({ onIniciarSesion }) {
     }
     if (formData.email.trim() === "") {
       newErrors.email = "El campo correo electrónico está vacío.";
-    } else if (!formData.email.includes("@")) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = "El correo electrónico es inválido.";
     }
 
@@ -71,109 +72,99 @@ function Acceso({ onIniciarSesion }) {
                 {esRegistro ? "Crear cuenta" : "Inicio de Sesión"}
               </h2>
 
-              <form onSubmit={handleSubmit} noValidate>
+              <Form onSubmit={handleSubmit} noValidate>
                 {esRegistro && (
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Nombre:
-                    </label>
-                    <input
-                      id="name"
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label> Nombre:</Form.Label>
+                    <Form.Control
                       name="name"
                       type="text"
-                      className={`form-control ${errors.name ? "is-invalid" : ""}`}
                       value={formData.name}
                       onChange={handleChange}
+                      isInvalid={!!errors.name}
                     />
-                    {errors.name && (
-                      <div className="invalid-feedback"> {errors.name} </div>
-                    )}
-                  </div>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.name}
+                    </Form.Control.Feedback>
+                  </Form.Group>
                 )}
 
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Correo Electronico:
-                  </label>
-                  <input
-                    id="email"
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Correo electrónico:</Form.Label>
+                  <Form.Control
                     name="email"
                     type="email"
-                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
                     value={formData.email}
                     onChange={handleChange}
+                    isInvalid={!!errors.email}
                   />
-                  {errors.email && (
-                    <div className="invalid-feedback"> {errors.email} </div>
-                  )}
-                </div>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Contraseña:
-                  </label>
-                  <input
-                    id="password"
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Contraseña:</Form.Label>
+                  <Form.Control
                     name="password"
                     type="password"
-                    className={`form-control ${errors.password ? "is-invalid" : ""}`}
                     value={formData.password}
                     onChange={handleChange}
+                    isInvalid={!!errors.password}
                   />
-                  {errors.password && (
-                    <div className="invalid-feedback"> {errors.password} </div>
-                  )}
-                </div>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
                 {esRegistro && (
-                  <div className="mb-3">
-                    <label htmlFor="confirmPassword" className="form-label">
-                      Confirmar Contraseña:
-                    </label>
-                    <input
-                      id="confirmPassword"
+                  <Form.Group className="mb-3" controlId="confirmPassword">
+                    <Form.Label>Confirmar contraseña:</Form.Label>
+                    <Form.Control
                       name="confirmPassword"
                       type="password"
-                      className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
                       value={formData.confirmPassword}
                       onChange={handleChange}
+                      isInvalid={!!errors.confirmPassword}
                     />
-                    {errors.confirmPassword && (
-                      <div className="invalid-feedback">
-                        {" "}
-                        {errors.confirmPassword}{" "}
-                      </div>
-                    )}
-                  </div>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.confirmPassword}
+                    </Form.Control.Feedback>
+                  </Form.Group>
                 )}
 
-                <div className="mb-3">
-                  <button type="submit" className="btn btn-primary">
-                    {esRegistro ? "Registrarse" : "Iniciar Sesión"}
-                  </button>
-                </div>
-              </form>
+                <Button type="submit" variant="outline-dark" className="w-100">
+                  {esRegistro ? "Registrarse" : "Iniciar Sesión"}
+                </Button>
+              </Form>
               {esRegistro ? (
-                <p>
-                  ¿ya tenes una cuenta?{" "}
-                  <Link
-                    onClick={() => setErrors({})}
+                <div className="text-center mt-3">
+                  <span className="me-2">¿Ya tenés una cuenta?</span>
+                  <Button
+                    as={Link}
                     to="/acceso?modo=login"
                     state={{ from }}
-                  >
-                    Inicia sesión
-                  </Link>
-                </p>
-              ) : (
-                <p>
-                  ¿no tenes cuenta?{" "}
-                  <Link
+                    size="sm"
+                    variant="outline-dark"
                     onClick={() => setErrors({})}
+                  >
+                    Iniciá sesión
+                  </Button>
+                </div>
+              ) : (
+                <div className="text-center mt-3">
+                  ¿no tenes cuenta?{" "}
+                  <Button
+                    as={Link}
                     to="/acceso?modo=registro"
                     state={{ from }}
+                    size="sm"
+                    variant="outline-dark"
+                    onClick={() => setErrors({})}
                   >
                     Regístrate
-                  </Link>
-                </p>
+                  </Button>
+                </div>
               )}
             </div>
           </div>
