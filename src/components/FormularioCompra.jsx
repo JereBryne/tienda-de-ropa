@@ -14,10 +14,11 @@ function validar(datos) {
     errores.email = "Ingresá un email válido.";
   }
 
+  const telefonoSinFormato = datos.telefono.replace(/[\s()+-]/g, "");
   if (!datos.telefono.trim()) {
     errores.telefono = "Ingresá tu teléfono.";
-  } else if (!/^[\d\s()+-]{8,}$/.test(datos.telefono.trim())) {
-    errores.telefono = "Ingresá un teléfono válido (solo números, mínimo 8).";
+  } else if (!/^\d{8,}$/.test(telefonoSinFormato)) {
+    errores.telefono = "Ingresá un teléfono válido con al menos 8 digitos.";
   }
 
   if (datos.entrega === "envio" && !datos.direccion.trim()) {

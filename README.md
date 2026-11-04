@@ -26,14 +26,16 @@ npm install
 npm run dev
 ```
 
-Abrir en el navegador la dirección que indique la terminal. La sesión y el carrito se mantienen durante la navegación, pero se reinician al recargar la página.
+Abrir en el navegador la dirección que indique la terminal. El carrito, los favoritos y el tema se conservan al recargar la página; la sesión, en cambio, se reinicia.
+
+Sitio publicado a traves de Vercel: [Tienda de Ropa](https://tienda-de-ropa-sigma-roan.vercel.app/).
 
 ## Integrantes
 
-| Nombre y apellido | DNI |
-| --- | ---: |
-| Sebastián Horacio Diaz | 34245773 |
-| Nahuel Solano | 46118948 |
+| Nombre y apellido              |      DNI |
+| ------------------------------ | -------: |
+| Sebastián Horacio Diaz         | 34245773 |
+| Nahuel Solano                  | 46118948 |
 | Renzo Santino Dottori Giordano | 44595644 |
-| Magno Tellechea | 44098748 |
-| Jeremias Markevich | 43516255 |
+| Magno Tellechea                | 44098748 |
+| Jeremias Markevich             | 43516255 |
